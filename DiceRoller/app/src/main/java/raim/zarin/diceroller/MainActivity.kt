@@ -40,11 +40,28 @@ class MainActivity : AppCompatActivity() {
         val dice = Dice(6)
         val diceRoll = dice.roll()
 
+        // Create second 6-sided dice and roll it
+        val dice2 = Dice(6)
+        val diceRoll2 = dice2.roll()
+
         // Find the ImageView in the layout
         val diceImage: ImageView = findViewById(R.id.imageView)
+        val diceImage2: ImageView = findViewById(R.id.imageView2)
 
-        // Determine which drawable resource ID to use
-        val drawableResource = when (diceRoll) {
+        // Update the screen with the correct drawable resource
+        diceImage.setImageResource(determineResource(diceRoll))
+        diceImage2.setImageResource(determineResource(diceRoll2))
+
+        // Update the content description
+        diceImage.contentDescription = diceRoll.toString()
+        diceImage2.contentDescription = diceRoll2.toString()
+    }
+
+    /**
+     * Determine which drawable resource ID to use
+     */
+    private fun determineResource(diceRoll: Int): Int {
+        return when (diceRoll) {
             1 -> R.drawable.dice_1
             2 -> R.drawable.dice_2
             3 -> R.drawable.dice_3
@@ -53,12 +70,6 @@ class MainActivity : AppCompatActivity() {
             6 -> R.drawable.dice_6
             else -> R.drawable.dice_1
         }
-
-        // Update the screen with the correct drawable resource
-        diceImage.setImageResource(drawableResource)
-
-        // Update the content description
-        diceImage.contentDescription = diceRoll.toString()
     }
 }
 
