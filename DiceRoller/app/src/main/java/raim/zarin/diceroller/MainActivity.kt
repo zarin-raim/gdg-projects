@@ -2,7 +2,7 @@ package raim.zarin.diceroller
 
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
@@ -27,6 +27,9 @@ class MainActivity : AppCompatActivity() {
 
             rollDice()
         }
+
+        // roll a dice on start
+        rollDice()
     }
 
     /**
@@ -37,15 +40,25 @@ class MainActivity : AppCompatActivity() {
         val dice = Dice(6)
         val diceRoll = dice.roll()
 
-        val dice2 = Dice(6)
-        val diceRoll2 = dice2.roll()
+        // Find the ImageView in the layout
+        val diceImage: ImageView = findViewById(R.id.imageView)
 
-        // Update the screen with the dice roll
-        val resultTextView: TextView = findViewById(R.id.textView)
-        resultTextView.text = diceRoll.toString()
+        // Determine which drawable resource ID to use
+        val drawableResource = when (diceRoll) {
+            1 -> R.drawable.dice_1
+            2 -> R.drawable.dice_2
+            3 -> R.drawable.dice_3
+            4 -> R.drawable.dice_4
+            5 -> R.drawable.dice_5
+            6 -> R.drawable.dice_6
+            else -> R.drawable.dice_1
+        }
 
-        val resultTextView2: TextView = findViewById(R.id.textView2)
-        resultTextView2.text = diceRoll2.toString()
+        // Update the screen with the correct drawable resource
+        diceImage.setImageResource(drawableResource)
+
+        // Update the content description
+        diceImage.contentDescription = diceRoll.toString()
     }
 }
 
